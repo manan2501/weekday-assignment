@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJobsData } from "./features/jobSearchSlice";
 import { useEffect } from "react";
+import { Grid } from "@mui/material";
+import JobCard from "./components/JobCard";
 
 function App() {
     const { jobs, totalJobs, loading, error } = useSelector(
@@ -14,7 +16,15 @@ function App() {
 
     console.log("jobSearch: ", { jobs, totalJobs, loading, error });
 
-    return <div>Clean React App</div>;
+    return (
+        <div>
+            <Grid container spacing={2}>
+                {jobs.map(job => {
+                    return <JobCard key={job.jdUid} job={job} />;
+                })}
+            </Grid>
+        </div>
+    );
 }
 
 export default App;
