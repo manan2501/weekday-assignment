@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJobsData } from "./features/jobSearchSlice";
 import { useEffect } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import JobCard from "./components/JobCard";
 
 function App() {
@@ -11,8 +11,24 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchJobsData({ limit: 10, offset: 0 }));
-    }, []);
+        dispatch(fetchJobsData({ limit: 20, offset: 0 }));
+    }, [dispatch]);
+
+    const handleScroll = () => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop !==
+            document.documentElement.offsetHeight
+        ) {
+            return;
+        } else if (jobs.length < totalJobs) {
+            dispatch(fetchJobsData({ limit: 10, offset: jobs.length }));
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [jobs.length, dispatch]);
 
     console.log("jobSearch: ", { jobs, totalJobs, loading, error });
 
@@ -23,6 +39,15 @@ function App() {
                     return <JobCard key={job.jdUid} job={job} />;
                 })}
             </Grid>
+            {loading && (
+                <Typography
+                    marginBlock={4}
+                    variant="body1"
+                    textAlign={"center"}
+                >
+                    Hang-on! Loading more data...
+                </Typography>
+            )}
         </div>
     );
 }
