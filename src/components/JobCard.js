@@ -16,7 +16,11 @@ import {
     Link
 } from "@mui/material";
 import "./JobCard.css";
-import { capitalizeFirstLetter } from "../utils/utils";
+import {
+    capitalizeFirstLetter,
+    getExperienceRange,
+    getSalaryText
+} from "../utils/utils";
 import { Bolt } from "@mui/icons-material";
 
 const JobCard = ({ job }) => {
@@ -94,7 +98,12 @@ const JobCard = ({ job }) => {
                     </Box>
 
                     <p className="card-salary">
-                        Estimated Salary: {job?.minJdSalary}-{job?.maxJdSalary}
+                        {getSalaryText({
+                            minJdSalary: job?.minJdSalary,
+                            maxJdSalary: job?.maxJdSalary,
+                            salaryCurrencyCode: job?.salaryCurrencyCode
+                        })}
+                        {/* Estimated Salary: {job?.minJdSalary}-{job?.maxJdSalary} */}
                     </p>
 
                     <p className="card-details">{job?.jobDetailsFromCompany}</p>
@@ -102,7 +111,10 @@ const JobCard = ({ job }) => {
                     <Box marginTop={1} className="info-container">
                         <h3>Required Experience</h3>
                         <h2>
-                            {job?.minExp}-{job?.maxExp} Years
+                            {getExperienceRange({
+                                minExp: job?.minExp,
+                                maxExp: job?.maxExp
+                            })}
                         </h2>
                     </Box>
 
