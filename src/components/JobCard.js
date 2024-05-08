@@ -24,7 +24,6 @@ import {
 import { Bolt } from "@mui/icons-material";
 
 const JobCard = ({ job }) => {
-    console.log("JOBS: ", job);
     return (
         <Grid item xs={12} md={6} lg={4}>
             {/* <Card>
