@@ -7,10 +7,26 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import store from "./store";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            light: "#c9faec",
+            main: "#54efc3",
+            dark: "#11b385",
+            darker: "3063e2e"
+        }
+    }
+});
+
 root.render(
     <Provider store={store}>
-        <App />
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
     </Provider>
 );

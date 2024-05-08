@@ -11,11 +11,16 @@ import {
     Paper,
     Box,
     IconButton,
-    Tooltip
+    Tooltip,
+    Button,
+    Link
 } from "@mui/material";
 import "./JobCard.css";
+import { capitalizeFirstLetter } from "../utils/utils";
+import { Bolt } from "@mui/icons-material";
 
 const JobCard = ({ job }) => {
+    console.log("JOBS: ", job);
     return (
         <Grid item xs={12} md={6} lg={4}>
             {/* <Card>
@@ -68,10 +73,14 @@ const JobCard = ({ job }) => {
                         <Avatar src={job.logoUrl} alt={job.companyName} />
                         <div>
                             <div className="info-container">
-                                <h3>{job.companyName}</h3>
-                                <h2>{job.jobRole}</h2>
+                                <h3>
+                                    {capitalizeFirstLetter(job?.companyName)}
+                                </h3>
+                                <h2>{capitalizeFirstLetter(job?.jobRole)}</h2>
                             </div>
-                            <p className="cards-sub-text">{job.location}</p>
+                            <p className="cards-sub-text">
+                                {capitalizeFirstLetter(job?.location)}
+                            </p>
                         </div>
 
                         {/* <Box>
@@ -84,16 +93,37 @@ const JobCard = ({ job }) => {
                         </Box> */}
                     </Box>
 
-                    <Typography
-                        variant="body2"
-                        color={"GrayText"}
-                        className="card-salary"
+                    <p className="card-salary">
+                        Estimated Salary: {job?.minJdSalary}-{job?.maxJdSalary}
+                    </p>
+
+                    <p className="card-details">{job?.jobDetailsFromCompany}</p>
+
+                    <Box marginTop={1} className="info-container">
+                        <h3>Required Experience</h3>
+                        <h2>
+                            {job?.minExp}-{job?.maxExp} Years
+                        </h2>
+                    </Box>
+
+                    <Box
+                        // paddingInline={1}
+                        display="flex"
+                        flexDirection={"column"}
+                        alignItems="center"
+                        gap={1}
+                        marginTop={1}
                     >
-                        Estimated Salary: {job.minJdSalary}-{job.maxJdSalary}{" "}
-                        <Tooltip title="Estimated by Weekday. Not provided by employer">
-                            <IconButton>⚠️</IconButton>
-                        </Tooltip>
-                    </Typography>
+                        <Link href={job?.jdLink} width={"100%"}>
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                startIcon={<Bolt />}
+                            >
+                                Easy Apply
+                            </Button>
+                        </Link>
+                    </Box>
                 </CardContent>
             </Card>
         </Grid>
